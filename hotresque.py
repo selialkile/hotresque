@@ -153,7 +153,8 @@ class HotResque(object):
             msg = self.__redis.lpop(self.key)
         if msg is not None and self.serializer is not None:
             msg = self.serializer.loads(msg)
-        return (json.loads(msg['args'][0]) if msg is not None else msg)
+            msg = json.loads(msg['args'][0])
+        return msg
     
     def put(self, *msgs):
         """Put one or more messages onto the queue. Example:
